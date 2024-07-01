@@ -12,37 +12,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const body_parser_1 = __importDefault(require("body-parser"));
-const cors_1 = __importDefault(require("cors"));
-const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
-const path_1 = __importDefault(require("path"));
+const cors_1 = __importDefault(require("cors"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = require("./config");
-const http_1 = __importDefault(require("http"));
-const routes_1 = require("./routes");
-// Load environment variables from .env file
-dotenv_1.default.config();
-// Connect to the MongoDB database
-(0, config_1.connectMongoDB)();
-// Create an instance of the Express application
+const listednfts_routes_1 = __importDefault(require("./routes/listednfts.routes"));
+// import uploadMusicRoute from "./routes/nfts.routes";
 const app = (0, express_1.default)();
-// Set up Cross-Origin Resource Sharing (CORS) options
-app.use((0, cors_1.default)());
-// Serve static files from the 'public' folder
-app.use(express_1.default.static(path_1.default.join(__dirname, './public')));
-// Parse incoming JSON requests using body-parser
-app.use(express_1.default.json({ limit: '50mb' }));
-app.use(express_1.default.urlencoded({ limit: '50mb', extended: true }));
-app.use(body_parser_1.default.json({ limit: '50mb' }));
-app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
-const server = http_1.default.createServer(app);
-// Define routes for different API endpoints
-app.use("/api/users", routes_1.UserRouter);
-// Define a route to check if the backend server is running
-app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send("Backend Server is Running now!");
+const port = config_1.PORT;
+app.use((0, cors_1.default)({
+    origin: "*",
 }));
-// Start the Express server to listen on the specified port
-server.listen(config_1.PORT, () => {
-    console.log(`Server is running on port ${config_1.PORT}`);
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
+app.use("/nft", listednfts_routes_1.default);
+// MongoDB Connection
+mongoose_1.default.set("strictQuery", true);
+mongoose_1.default
+    .connect(process.env.NODE_ENV_MONGO_URL)
+    .then(() => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("==========> Server is running! ⏲  <==========");
+    app.listen(port, () => {
+        console.log(`==========> Connected MongoDB 👌  <==========`);
+    });
+}))
+    .catch((err) => {
+    console.log("Cannot connect to the bot! 😩", err);
+    process.exit();
+});
+// Routes
+app.get("/", (req, res) => {
+    res.send("Server is running.👌");
 });

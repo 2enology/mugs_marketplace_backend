@@ -9,5 +9,5 @@ try {
 }
 
 export const MONGO_URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
-export const PORT = process.env.PORT || 9000
+export const PORT = process.env.PORT || 9000;
 export const JWT_SECRET = process.env.JWT_SECRET || "JWT_SECRET";

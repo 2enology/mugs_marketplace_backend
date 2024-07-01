@@ -1,45 +1,38 @@
-import bodyParser from "body-parser";
-import cors from "cors";
-import dotenv from "dotenv";
 import express from "express";
-import path from 'path';
+import cors from "cors";
+import mongoose from "mongoose";
+import { PORT } from "./config";
+import listRoute from "./routes/listednfts.routes";
 
-import { PORT, connectMongoDB } from "./config";
-import http from "http";
-import { UserRouter } from "./routes";
-
-// Load environment variables from .env file
-dotenv.config();
-
-// Connect to the MongoDB database
-connectMongoDB();
-
-// Create an instance of the Express application
+// import uploadMusicRoute from "./routes/nfts.routes";
 const app = express();
+const port = PORT;
 
-// Set up Cross-Origin Resource Sharing (CORS) options
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/nft", listRoute);
 
-// Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, './public')));
+// MongoDB Connection
+mongoose.set("strictQuery", true);
+mongoose
+  .connect(process.env.NODE_ENV_MONGO_URL!)
+  .then(async () => {
+    console.log("==========> Server is running! ⏲  <==========");
+    app.listen(port, () => {
+      console.log(`==========> Connected MongoDB 👌  <==========`);
+    });
+  })
+  .catch((err) => {
+    console.log("Cannot connect to the bot! 😩", err);
+    process.exit();
+  });
 
-// Parse incoming JSON requests using body-parser
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
-const server = http.createServer(app);
-
-// Define routes for different API endpoints
-app.use("/api/users", UserRouter);
-
-// Define a route to check if the backend server is running
-app.get("/", async (req: any, res: any) => {
-  res.send("Backend Server is Running now!");
-});
-
-// Start the Express server to listen on the specified port
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Routes
+app.get("/", (req, res) => {
+  res.send("Server is running.👌");
 });
