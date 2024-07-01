@@ -39,6 +39,23 @@ class CollectionController {
     }
   }
 
+  async findAll(req: Request, res: Response): Promise<void> {
+    try {
+      const data = await CollectionData.find({});
+      if (!data || data.length === 0) {
+        res.status(404).send({ message: "No Collections found" });
+      } else {
+        res.send(data);
+      }
+    } catch (err: any) {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while retrieving collection data.",
+      });
+    }
+  }
+
   // async findOne(req: Request, res: Response): Promise<void> {
   //   const { mintAddr } = req.params;
   //   try {
@@ -75,22 +92,6 @@ class CollectionController {
   //     const collectionAddr = req.params.id;
   //     const data = await ListedNfts.find({ collectionAddr });
   //     res.send(data);
-  //   } catch (err: any) {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || "Some error occurred while retrieving ListedNfts.",
-  //     });
-  //   }
-  // }
-
-  // async findAll(req: Request, res: Response): Promise<void> {
-  //   try {
-  //     const data = await ListedNfts.find({});
-  //     if (!data || data.length === 0) {
-  //       res.status(404).send({ message: "No ListedNfts found" });
-  //     } else {
-  //       res.send(data);
-  //     }
   //   } catch (err: any) {
   //     res.status(500).send({
   //       message:

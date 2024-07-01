@@ -53,5 +53,24 @@ class CollectionController {
             }
         });
     }
+    findAll(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const data = yield collection_model_1.default.find({});
+                if (!data || data.length === 0) {
+                    res.status(404).send({ message: "No Collections found" });
+                }
+                else {
+                    res.send(data);
+                }
+            }
+            catch (err) {
+                res.status(500).send({
+                    message: err.message ||
+                        "Some error occurred while retrieving collection data.",
+                });
+            }
+        });
+    }
 }
 exports.default = new CollectionController();

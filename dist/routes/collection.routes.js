@@ -8,4 +8,6 @@ const collection_controller_1 = __importDefault(require("../controller/collectio
 const router = (0, express_1.Router)();
 // Create a new listed data
 router.post("/create", collection_controller_1.default.create);
+// Get all collection data
+router.get("/", collection_controller_1.default.findAll);
 exports.default = router;
