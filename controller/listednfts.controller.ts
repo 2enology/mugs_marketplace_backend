@@ -66,10 +66,10 @@ class ListedNftsController {
       );
 
       const listedNftsArray = createListedNftsArray(req.body.listData);
-      const activityDatasArray = createActivityDataArray(req.body.listData);
+      const activityDataArray = createActivityDataArray(req.body.listData);
 
       await ListedNfts.create(listedNftsArray);
-      const createdListings = await ActivityData.create(activityDatasArray);
+      const createdListings = await ActivityData.create(activityDataArray);
 
       res.send(createdListings);
     } catch (err) {
@@ -238,7 +238,7 @@ class ListedNftsController {
 
       if (!offerUpdateData) {
         res.status(404).send({
-          message: `Cannot update OfferDatas with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
+          message: `Cannot update OfferData with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
         });
       }
 
@@ -291,7 +291,7 @@ class ListedNftsController {
 
       if (!offerUpdateData) {
         res.status(404).send({
-          message: `Cannot update OfferDatas with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
+          message: `Cannot update OfferData with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
         });
       }
 

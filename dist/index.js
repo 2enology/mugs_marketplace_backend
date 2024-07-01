@@ -17,6 +17,7 @@ const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = require("./config");
 const listednfts_routes_1 = __importDefault(require("./routes/listednfts.routes"));
+const collection_routes_1 = __importDefault(require("./routes/collection.routes"));
 // import uploadMusicRoute from "./routes/nfts.routes";
 const app = (0, express_1.default)();
 const port = config_1.PORT;
@@ -26,6 +27,7 @@ app.use((0, cors_1.default)({
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use("/nft", listednfts_routes_1.default);
+app.use("/collection", collection_routes_1.default);
 // MongoDB Connection
 mongoose_1.default.set("strictQuery", true);
 mongoose_1.default

@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 // Define the interface for the schema
-interface IActivityDatas extends Document {
+interface IActivityData extends Document {
   imgUrl: string;
   tokenId: string;
   mintAddr: string;
@@ -13,7 +13,7 @@ interface IActivityDatas extends Document {
 }
 
 // Create the schema
-const activityDatasSchema: Schema = new Schema(
+const activityDatachema: Schema = new Schema(
   {
     imgUrl: { type: String, required: true },
     tokenId: { type: String, required: true },
@@ -28,15 +28,15 @@ const activityDatasSchema: Schema = new Schema(
 );
 
 // Customize toJSON method
-activityDatasSchema.method("toJSON", function () {
+activityDatachema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   object.id = _id;
   return object;
 });
 
 // Create and export the model
-const ActivityDatas = mongoose.model<IActivityDatas>(
-  "activitydatas",
-  activityDatasSchema
+const ActivityData = mongoose.model<IActivityData>(
+  "activities",
+  activityDatachema
 );
-export default ActivityDatas;
+export default ActivityData;

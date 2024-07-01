@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 // Define the interface for the schema
-interface IOfferDatas extends Document {
+interface IOfferData extends Document {
   imgUrl: string;
   tokenId: string;
   listedNftId: string;
@@ -17,7 +17,7 @@ interface IOfferDatas extends Document {
 }
 
 // Create the schema
-const offerDatasSchema: Schema = new Schema(
+const offerDataSchema: Schema = new Schema(
   {
     imgUrl: { type: String, required: true },
     tokenId: { type: String, required: true },
@@ -36,12 +36,12 @@ const offerDatasSchema: Schema = new Schema(
 );
 
 // Customize toJSON method
-offerDatasSchema.method("toJSON", function () {
+offerDataSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   object.id = _id;
   return object;
 });
 
 // Create and export the model
-const OfferDatas = mongoose.model<IOfferDatas>("offerdatas", offerDatasSchema);
-export default OfferDatas;
+const OfferData = mongoose.model<IOfferData>("offers", offerDataSchema);
+export default OfferData;
