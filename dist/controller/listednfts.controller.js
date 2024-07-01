@@ -64,9 +64,9 @@ class ListedNftsController {
                 const signatures = yield Promise.all(txs.map((tx) => sendTransaction(tx)));
                 yield Promise.all(signatures.map((signature) => solConnection.confirmTransaction(signature, "confirmed")));
                 const listedNftsArray = createListedNftsArray(req.body.listData);
-                const activityDatasArray = createActivityDataArray(req.body.listData);
+                const activityDataArray = createActivityDataArray(req.body.listData);
                 yield listednfts_model_1.default.create(listedNftsArray);
-                const createdListings = yield activity_model_1.default.create(activityDatasArray);
+                const createdListings = yield activity_model_1.default.create(activityDataArray);
                 res.send(createdListings);
             }
             catch (err) {
@@ -218,7 +218,7 @@ class ListedNftsController {
                 const offerUpdateData = yield offer_model_1.default.updateMany({ mintAddr: { $in: mintAddrArray } }, { $set: { active: 0 } });
                 if (!offerUpdateData) {
                     res.status(404).send({
-                        message: `Cannot update OfferDatas with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
+                        message: `Cannot update OfferData with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
                     });
                 }
                 if (deleteResult.deletedCount === 0) {
@@ -256,7 +256,7 @@ class ListedNftsController {
                 const offerUpdateData = yield offer_model_1.default.updateMany({ mintAddr: { $in: mintAddrArray } }, { $set: { active: 0 } });
                 if (!offerUpdateData) {
                     res.status(404).send({
-                        message: `Cannot update OfferDatas with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
+                        message: `Cannot update OfferData with mintAddr=${mintAddrArray}. Maybe ListedData was not found!`,
                     });
                 }
                 if (deleteResult.deletedCount === 0) {

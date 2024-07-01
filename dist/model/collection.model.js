@@ -36,22 +36,26 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 // Create the schema
-const listedNftsSchema = new mongoose_1.Schema({
-    tokenId: { type: String, required: true },
-    collectionAddr: { type: String, required: true },
+const collectionDataSchema = new mongoose_1.Schema({
     imgUrl: { type: String, required: true },
-    mintAddr: { type: String, required: true },
-    seller: { type: String, required: true },
-    metaDataUrl: { type: String, required: true },
-    solPrice: { type: Number, required: true },
-    tokenPrice: { type: Number, required: true },
+    collectionName: { type: String, required: true },
+    collectionAddr: { type: String, required: true },
+    twitterLink: { type: String },
+    discordLink: { type: String },
+    currentPrice: { type: Number },
+    previousPrice: { type: Number },
+    volume: { type: Number },
+    change: { type: Number },
+    sales: { type: Number },
+    marketCap: { type: Number },
+    totalVolume: { type: Number },
 }, { timestamps: true });
 // Customize toJSON method
-listedNftsSchema.method("toJSON", function () {
+collectionDataSchema.method("toJSON", function () {
     const _a = this.toObject(), { __v, _id } = _a, object = __rest(_a, ["__v", "_id"]);
     object.id = _id;
     return object;
 });
 // Create and export the model
-const ListedNfts = mongoose_1.default.model("listnfts", listedNftsSchema);
-exports.default = ListedNfts;
+const CollectionData = mongoose_1.default.model("collections", collectionDataSchema);
+exports.default = CollectionData;

@@ -36,7 +36,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 // Create the schema
-const offerDatasSchema = new mongoose_1.Schema({
+const offerDataSchema = new mongoose_1.Schema({
     imgUrl: { type: String, required: true },
     tokenId: { type: String, required: true },
     listedNftId: { type: String, required: true },
@@ -51,11 +51,11 @@ const offerDatasSchema = new mongoose_1.Schema({
     buyer: { type: String, required: true },
 }, { timestamps: true });
 // Customize toJSON method
-offerDatasSchema.method("toJSON", function () {
+offerDataSchema.method("toJSON", function () {
     const _a = this.toObject(), { __v, _id } = _a, object = __rest(_a, ["__v", "_id"]);
     object.id = _id;
     return object;
 });
 // Create and export the model
-const OfferDatas = mongoose_1.default.model("offerdatas", offerDatasSchema);
-exports.default = OfferDatas;
+const OfferData = mongoose_1.default.model("offers", offerDataSchema);
+exports.default = OfferData;

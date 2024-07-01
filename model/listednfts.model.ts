@@ -35,5 +35,5 @@ listedNftsSchema.method("toJSON", function () {
 });
 
 // Create and export the model
-const ListedNfts = mongoose.model<IListedNfts>("listednfts", listedNftsSchema);
+const ListedNfts = mongoose.model<IListedNfts>("listnfts", listedNftsSchema);
 export default ListedNfts;

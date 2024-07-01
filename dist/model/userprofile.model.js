@@ -36,7 +36,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 // Create the schema
-const userProfileDatasSchema = new mongoose_1.Schema({
+const userProfileDataSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     avatarImg: { type: String, required: true },
     bannerImg: { type: String, required: true },
@@ -46,11 +46,11 @@ const userProfileDatasSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
 }, { timestamps: true });
 // Customize toJSON method
-userProfileDatasSchema.method("toJSON", function () {
+userProfileDataSchema.method("toJSON", function () {
     const _a = this.toObject(), { __v, _id } = _a, object = __rest(_a, ["__v", "_id"]);
     object.id = _id;
     return object;
 });
 // Create and export the model
-const UserProfileDatas = mongoose_1.default.model("userprofiledata", userProfileDatasSchema);
-exports.default = UserProfileDatas;
+const UserProfileData = mongoose_1.default.model("users", userProfileDataSchema);
+exports.default = UserProfileData;

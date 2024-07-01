@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { PORT } from "./config";
 import listRoute from "./routes/listednfts.routes";
+import collectionRoute from "./routes/collection.routes";
 
 // import uploadMusicRoute from "./routes/nfts.routes";
 const app = express();
@@ -16,6 +17,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/nft", listRoute);
+app.use("/collection", collectionRoute);
 
 // MongoDB Connection
 mongoose.set("strictQuery", true);
